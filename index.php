@@ -86,7 +86,7 @@ if( $oald && $persi ) echo '</ul>';
 
 function get_oald()
 {
-  $f = $_POST['email'].'.txt';
+  $f = md5($_POST['email']).'.txt';
   if( !file_exists($f) ) return false;
   $fp = fopen($f, 'r');
   $o = fread($fp, filesize($f));
@@ -97,7 +97,7 @@ function get_oald()
 function save_data($f)
 {
 	if(strlen($f) < 10) return false;
-  $fp = fopen($_POST['email'].'.txt', 'w');
+  $fp = fopen(md5($_POST['email']).'.txt', 'w');
   fwrite($fp, $f);
   fclose($fp);
 }
@@ -135,7 +135,7 @@ $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, 'http://www.tumblr.com/login');
 curl_setopt($ch, CURLOPT_POST, true);
 curl_setopt($ch, CURLOPT_POSTFIELDS, $_POST);
-curl_setopt ($ch, CURLOPT_COOKIEJAR, $_POST['email'].'_cookie.txt');
+curl_setopt ($ch, CURLOPT_COOKIEJAR, md5($_POST['email']).'_cookie.txt');
 curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
 $store = curl_exec($ch);
 
